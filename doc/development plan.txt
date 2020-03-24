@@ -1,0 +1,7 @@
+1. import data: cordinate of the points consisting of the 3D shape
+2. output result: connected regoins (number and the corresponidng points)
+3. software components
+3.1. data reader: extract point coordinate from the file
+3.2. data anaylzer: recoginize connected regions based on the coordinates of the points
+3.3. result generator: output connection result and write it into a file
+3.4. user interface
