@@ -29,4 +29,5 @@ public class Triangle {
     public void setV3(Vertex v3) {
         this.v3 = v3;
     }
+
 }
