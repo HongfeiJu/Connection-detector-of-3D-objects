@@ -2,7 +2,7 @@ package edu.vt.kathylu;
 
 public class Triangle {
     private Vertex v1, v2, v3;
-
+    private Vertex centroid = null;
     public Triangle(){
     }
 
@@ -30,4 +30,11 @@ public class Triangle {
         this.v3 = v3;
     }
 
+    public void setCentroid(Vertex centroid){
+        this.centroid = centroid;
+    }
+
+    public Vertex getCentroid(){
+        return centroid;
+    }
 }
