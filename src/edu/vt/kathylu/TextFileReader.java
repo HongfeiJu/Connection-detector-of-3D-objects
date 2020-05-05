@@ -1,5 +1,7 @@
 package edu.vt.kathylu;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -7,23 +9,30 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TextFileReader {
-    List<Triangle> triangles = new LinkedList<>();
-
-    public TextFileReader(String filepath) throws IOException {
+    private List<Triangle> triangles = new LinkedList<>();
+    public TextFileReader(int skip, String filepath) throws IOException {
         File file = new File(filepath);
 
         Scanner sc = new Scanner(file);
+        sc.nextLine();
         while (sc.hasNextLine()){
-
-            String line = sc.nextLine();
-            //System.out.println(line);
-            if(line.indexOf("outer") ==-1){
-                continue;
-            }
-            Vertex v1 = extractVertex(sc.nextLine()),
-                    v2 = extractVertex(sc.nextLine()),
-                    v3 = extractVertex(sc.nextLine());
             Triangle triangle = new Triangle();
+            int count = 7 * skip;
+            while(count>0 && sc.hasNextLine()){
+                //System.out.println();
+                count--;
+                String line = sc.nextLine();
+                triangle.addText(line);
+                //System.out.println(line);
+            }
+            if(count>0){
+                break;
+            }
+            List<String> text = triangle.getText();
+            Vertex v1 = extractVertex(text.get(2)),
+                    v2 = extractVertex(text.get(3)),
+                    v3 = extractVertex(text.get(4));
+
             triangle.setV1(v1);
             triangle.setV2(v2);
             triangle.setV3(v3);
