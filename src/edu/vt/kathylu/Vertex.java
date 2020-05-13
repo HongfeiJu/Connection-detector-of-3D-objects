@@ -1,33 +1,33 @@
 package edu.vt.kathylu;
 
 public class Vertex {
-    private double x = 0, y = 0, z = 0;
+    private float x = 0, y = 0, z = 0;
 
     public Vertex(){
 
     }
 
-    public void setX(double x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public void setY(double y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public void setZ(double z) {
+    public void setZ(float z) {
         this.z = z;
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getZ() {
+    public float getZ() {
         return z;
     }
 }

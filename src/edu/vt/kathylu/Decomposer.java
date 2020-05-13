@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Decomposer {
-    private double limit = 1;
+    private float limit = 1;
     private Processor processor = null;
-    public Decomposer(double _limit){
+    public Decomposer(float _limit){
         limit = _limit;
         processor = new Processor();
     }
@@ -22,9 +22,9 @@ public class Decomposer {
     }
 
     public List<Triangle> decompose(Triangle triangle){
-        List<Double> lengths = processor.getTriangleEdgeLengths(triangle);
+        List<Float> lengths = processor.getTriangleEdgeLengths(triangle);
         List<Triangle> result = new LinkedList<>();
-        double len1 = lengths.get(0), len2 = lengths.get(1), len3 = lengths.get(2);
+        float len1 = lengths.get(0), len2 = lengths.get(1), len3 = lengths.get(2);
         //System.out.println("len1: " + len1 + ", len2: " + len2 + ", len3: " +len3);
         if( len1<= limit && len2 <= limit && len3 <= limit ){
             result.add(triangle);

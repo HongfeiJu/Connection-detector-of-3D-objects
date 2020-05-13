@@ -1,6 +1,6 @@
 package edu.vt.kathylu;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Processor {
@@ -12,16 +12,16 @@ public class Processor {
         return vertex;
     }
 
-    public List<Double> getTriangleEdgeLengths(Triangle triangle){
-        List<Double> lengths = new LinkedList<>();
+    public List<Float> getTriangleEdgeLengths(Triangle triangle){
+        List<Float> lengths = new ArrayList<>();
         lengths.add(getEdgeLength(triangle.getV1(), triangle.getV2()));
         lengths.add(getEdgeLength(triangle.getV2(), triangle.getV3()));
         lengths.add(getEdgeLength(triangle.getV3(), triangle.getV1()));
         return lengths;
     }
 
-    public double getEdgeLength(Vertex v1, Vertex v2){
-        return Math.sqrt(
+    public float getEdgeLength(Vertex v1, Vertex v2){
+        return (float) Math.sqrt(
                 Math.pow(v1.getX()-v2.getX(), 2)
                         + Math.pow(v1.getY()-v2.getY(), 2)
                         + Math.pow(v1.getZ()-v2.getZ(), 2));

@@ -1,9 +1,14 @@
 package edu.vt.kathylu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Triangle {
     private Vertex v1, v2, v3;
     private Vertex centroid = null;
+    private List<String> text = null;
     public Triangle(){
+        text = new ArrayList<>();
     }
 
     public Vertex getV1() {
@@ -36,5 +41,13 @@ public class Triangle {
 
     public Vertex getCentroid(){
         return centroid;
+    }
+
+    public void addText(String line){
+        this.text.add(line);
+    }
+
+    public List<String> getText(){
+        return this.text;
     }
 }

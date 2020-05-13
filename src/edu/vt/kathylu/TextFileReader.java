@@ -4,12 +4,12 @@ import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class TextFileReader {
-    private List<Triangle> triangles = new LinkedList<>();
+    private List<Triangle> triangles = new ArrayList<>();
     public TextFileReader(int skip, String filepath) throws IOException {
         File file = new File(filepath);
 
@@ -49,10 +49,10 @@ public class TextFileReader {
         return v;
     }
 
-    private double parseExpoData(String str){
+    private float parseExpoData(String str){
         String[] parts = str.split("e");
-        double num=Double.valueOf(parts[0]), e=Double.valueOf(parts[1]);
-        return num*Math.pow(10, e);
+        float num=Float.valueOf(parts[0]), e=Float.valueOf(parts[1]);
+        return (float) (num*Math.pow(10, e));
     }
 
     public List<Triangle> getTrianlges(){
