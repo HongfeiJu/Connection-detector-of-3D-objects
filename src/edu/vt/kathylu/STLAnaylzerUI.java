@@ -25,24 +25,89 @@ public class STLAnaylzerUI extends JFrame{
             CRITICAL_VALUE = 0,
             SKIP = 0;
 
+    private List<Triangle> triangles;
+
+    private JPanel mainPanel;
+    private JPanel readPanel;
+    private JPanel analyzePanel;
+    private JPanel writePanel;
+
     private JTextField dataPathInputField;
+    private JTextField skipNumInputField;
     private JButton readDataButton;
 
     private JTextField criticalValueInputField;
-    private JTextField skipNumInputField;
     private JButton connectingButton;
 
     private JTextField outputPathInputField;
     private JTextField prefixInputField;
     private JButton saveDataButton;
 
+    private JTextArea resultArea;
+
     private STLAnaylzerUI(){
         initUI();
+        assembleUI();
+        initActions();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     private void initUI() {
         setSize(new Dimension(800, 800));
-        setVisible(true);
+
+        mainPanel = new JPanel(new GridLayout(10,1,0,5));
+        readPanel = new JPanel(new GridLayout(10,1,0,5));
+        analyzePanel = new JPanel(new GridLayout(10,1,0,5));
+        writePanel = new JPanel(new GridLayout(10,1,0,5));
+
+        dataPathInputField = new JTextField();
+        skipNumInputField = new JTextField();
+        readDataButton = new JButton("read data");
+
+        criticalValueInputField = new JTextField();
+        connectingButton = new JButton("analyze");
+
+        outputPathInputField = new JTextField();
+        prefixInputField = new JTextField();
+        saveDataButton = new JButton("save");
+
+        resultArea = new JTextArea();
+    }
+
+    private void assembleUI() {
+
+        getContentPane().add(mainPanel);
+
+        mainPanel.add(dataPathInputField);
+        mainPanel.add(skipNumInputField);
+        mainPanel.add(readDataButton);
+
+        mainPanel.add(criticalValueInputField);
+        mainPanel.add(connectingButton);
+
+        mainPanel.add(outputPathInputField);
+        mainPanel.add(prefixInputField);
+        mainPanel.add(saveDataButton);
+
+        mainPanel.add(resultArea);
+    }
+
+    private void initActions() {
+        readDataButton.addActionListener(e -> {
+            String path = dataPathInputField.getText();
+            int skipNumber = Integer.parseInt(skipNumInputField.getText());
+            if (path.length() == 0) {
+                System.out.println("empty");
+            } else {
+                try {
+                    readData(path, skipNumber);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            getTriangleInfo();
+        });
     }
 
     public static void main(String[] args) throws IOException {
@@ -94,5 +159,31 @@ public class STLAnaylzerUI extends JFrame{
          */
     }
 
+    private void readData(String path, int skipNumber) throws IOException {
+        textFileReader = new TextFileReader(skipNumber, path);
+        triangles = textFileReader.getTrianlges();
+        System.out.println("got " + triangles.size() + " triangles");
+        resultArea.append("got " + triangles.size() + " triangles\n");
+    }
+
+    private void getTriangleInfo(){
+        TriangleProcessor processor = new TriangleProcessor();
+        List<Vertex> centroids = new ArrayList<>();
+        int count = 0;
+        float min=Float.MAX_VALUE, max=Float.MIN_VALUE, sum=0;
+        for(Triangle triangle: triangles){
+            centroids.add(processor.getCentroid(triangle));
+            triangle.setCentroid(processor.getCentroid(triangle));
+            count += 3;
+
+            for(float length: processor.getTriangleEdgeLengths(triangle)){
+                sum+=length;
+                max=Math.max(max, length);
+                min=Math.min(min, length);
+            }
+        }
+        resultArea.append("average edge length: " + sum/count + "    min edge length: " + min + "    max edge length: " + max);
+        System.out.println("average edge length: " + sum/count + "    min edge length: " + min + "    max edge length: " + max);
+    }
 
 }
