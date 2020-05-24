@@ -3,11 +3,12 @@ package edu.vt.kathylu;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Main {
     private static TextFileReader textFileReader;
-    private static final String
+    private static String
             DATA_FILE_PATH = "C:\\Users\\hongf\\Google Drive\\Career\\Kathy Lu\\raw data\\mxene01_100_200430_part1.stl",
             RESULT_FILE_PATH = "C:\\Users\\hongf\\Google Drive\\Career\\Kathy Lu\\raw data",
             RESULT_FILE_PREFIX = "group";
@@ -21,6 +22,11 @@ public class Main {
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\sheet_1_100_100.txt
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\small_packing_0_0005volper_cube.stl
         //‪C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\mxene01_100_200430.stl (multiple sheets)
+        DATA_FILE_PATH = args[0];
+        RESULT_FILE_PATH = args[1];
+        RESULT_FILE_PATH = args[2];
+        CRITICAL_VALUE = Integer.parseInt(args[3]);
+        SKIP = Integer.parseInt(args[4]);
 	    textFileReader = new TextFileReader(SKIP, DATA_FILE_PATH);
 	    List<Triangle> triangles = textFileReader.getTrianlges();
 
@@ -55,6 +61,12 @@ public class Main {
         }
         System.out.println("number of centroids: " + centroids.size());
         System.out.println("average edge length: " + sum/count + "    min edge length: " + min + "    max edge length: " + max);
+        Scanner input = new Scanner(System.in);
+        System.out.println("press y to continue, any other input to exit: ");
+        String choice = input.nextLine();
+        if(!choice.equals("y")){
+            return;
+        }
         /*
         Vertex v0=new Vertex();
         float minCD = float.MAX_VALUE, maxCD = float.MIN_VALUE, sumCD=0;

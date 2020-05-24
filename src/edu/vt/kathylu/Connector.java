@@ -59,7 +59,7 @@ public class Connector {
             parent[i] = i;
         }
         for(int i=0;i<graph.length;i++){
-            System.out.println("union find: " + i);
+            System.out.println("connect triangle: " + i);
             for(int j: graph[i]){
                 int pi = find(parent, i), pj = find(parent, j);
                 if(pi != pj){
@@ -106,7 +106,7 @@ public class Connector {
                     //graph[j].add(i);
                 }
             }
-            System.out.println("Node: "+i+",  neighor: " +graph[i].size());
+            System.out.println("triangle: "+i+",  neighbour count: " +graph[i].size());
         }
         return graph;
     }

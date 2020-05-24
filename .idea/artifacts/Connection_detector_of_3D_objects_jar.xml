@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Connection-detector-of-3D-objects:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Connection_detector_of_3D_objects_jar</output-path>
+    <root id="archive" name="Connection-detector-of-3D-objects.jar">
+      <element id="module-output" name="Connection-detector-of-3D-objects" />
+    </root>
+  </artifact>
+</component>
