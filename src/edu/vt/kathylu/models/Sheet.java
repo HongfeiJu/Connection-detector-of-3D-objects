@@ -1,4 +1,6 @@
-package edu.vt.kathylu;
+package edu.vt.kathylu.models;
+
+import edu.vt.kathylu.models.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,17 @@
-package edu.vt.kathylu;
+package edu.vt.kathylu.processor;
+
+import edu.vt.kathylu.models.Triangle;
+import edu.vt.kathylu.models.Vertex;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Decomposer {
     private float limit = 1;
-    private Processor processor = null;
+    private TriangleProcessor processor = null;
     public Decomposer(float _limit){
         limit = _limit;
-        processor = new Processor();
+        processor = new TriangleProcessor();
     }
     public List<Triangle> decompose(List<Triangle> triangles){
         List<Triangle> result = new LinkedList<>();

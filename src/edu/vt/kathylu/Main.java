@@ -1,5 +1,12 @@
 package edu.vt.kathylu;
 
+import edu.vt.kathylu.io.TextFileReader;
+import edu.vt.kathylu.io.TextFileWriter;
+import edu.vt.kathylu.models.Triangle;
+import edu.vt.kathylu.models.Vertex;
+import edu.vt.kathylu.processor.Connector;
+import edu.vt.kathylu.processor.TriangleProcessor;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +16,12 @@ import java.util.Set;
 public class Main {
     private static TextFileReader textFileReader;
     private static String
-            DATA_FILE_PATH = "C:\\Users\\hongf\\Google Drive\\Career\\Kathy Lu\\raw data\\mxene01_100_200430_part1.stl",
-            RESULT_FILE_PATH = "C:\\Users\\hongf\\Google Drive\\Career\\Kathy Lu\\raw data",
-            RESULT_FILE_PREFIX = "group";
+            DATA_FILE_PATH = "",
+            RESULT_FILE_PATH = "",
+            RESULT_FILE_PREFIX = "";
     private static int
-            CRITICAL_VALUE = 1000,
-            SKIP = 1;
+            CRITICAL_VALUE = 0,
+            SKIP = 0;
 
 
     public static void main(String[] args) throws IOException {
@@ -30,21 +37,8 @@ public class Main {
 	    textFileReader = new TextFileReader(SKIP, DATA_FILE_PATH);
 	    List<Triangle> triangles = textFileReader.getTrianlges();
 
-	    /*
-        List<Triangle> tempTriangles=new ArrayList<>();
-        for(int i=0;i<triangles.size();i++){
-            tempTriangles.add(triangles.get(i));
-        }
-        triangles=tempTriangles;
-	     */
-
-        /*
-        Decomposer decomposer = new Decomposer(0.01);
-        triangles = decomposer.decompose(triangles);
-         */
-
         System.out.println("number of triangles: " + triangles.size());
-        Processor processor = new Processor();
+        TriangleProcessor processor = new TriangleProcessor();
         List<Vertex> centroids = new ArrayList<>();
         int count = 0;
         float min=Float.MAX_VALUE, max=Float.MIN_VALUE, sum=0;
@@ -67,24 +61,6 @@ public class Main {
         if(!choice.equals("y")){
             return;
         }
-        /*
-        Vertex v0=new Vertex();
-        float minCD = float.MAX_VALUE, maxCD = float.MIN_VALUE, sumCD=0;
-        for(int i=0;i<centroids.size();i++){
-            float curCD = processor.getEdgeLength(centroids.get(i), v0);
-            minCD=Math.min(minCD, curCD);
-            maxCD=Math.max(maxCD, curCD);
-            sumCD+=curCD;
-
-            for(int j=i+1;j<centroids.size();j++){
-                float curCD = processor.getEdgeLength(centroids.get(i), centroids.get(j));
-                minCD=Math.min(minCD, curCD);
-                maxCD=Math.max(maxCD, curCD);
-                sumCD+=curCD;
-            }
-        }
-        System.out.println("average CD: " + sumCD/centroids.size() + "    min CD: " + minCD + "    max CD: " + maxCD);
-        */
 
         List<Set<Triangle>> groups = (new Connector()).getConnectedGroups(triangles, CRITICAL_VALUE);
         System.out.println("group count: " + groups.size());

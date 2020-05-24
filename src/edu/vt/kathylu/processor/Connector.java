@@ -1,4 +1,7 @@
-package edu.vt.kathylu;
+package edu.vt.kathylu.processor;
+
+import edu.vt.kathylu.models.Triangle;
+import edu.vt.kathylu.models.Vertex;
 
 import java.util.*;
 
@@ -21,13 +24,6 @@ public class Connector {
             }
         });
 
-        /*
-        for(Triangle triangle: triangles){
-            Vertex centroid = triangle.getCentroid();
-            System.out.println(centroid.getX()+", "+centroid.getY()+", "+centroid.getZ());
-        }
-
-         */
 
         int size = triangles.size();
         boolean[] visited = new boolean[triangles.size()];
@@ -35,21 +31,6 @@ public class Connector {
         System.out.println("graph is built");
         List<Set<Triangle>> res = new LinkedList<>();
         unionFindConnect(graph, triangles, res);
-        /*
-        for(int i = 0;i < triangles.size();i++){
-            if(visited[i]){
-                continue;
-            }
-            List<Triangle> subres = new LinkedList<>(), cur = new LinkedList<>();
-            cur.add(triangles.get(i));
-            subres.add(triangles.get(i));
-            visited[i] = true;
-            connect(triangles, visited, cur, subres, gap);
-            System.out.println("group counts: " + subres.size());
-            res.add(subres);
-        }
-        processed = 0;
-         */
         return res;
     }
 

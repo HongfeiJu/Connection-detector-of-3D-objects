@@ -1,9 +1,12 @@
-package edu.vt.kathylu;
+package edu.vt.kathylu.processor;
+
+import edu.vt.kathylu.models.Triangle;
+import edu.vt.kathylu.models.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Processor {
+public class TriangleProcessor {
     public Vertex getCentroid(Triangle triangle){
         Vertex vertex = new Vertex();
         vertex.setX((triangle.getV1().getX() + triangle.getV2().getX() + triangle.getV3().getX())/3);

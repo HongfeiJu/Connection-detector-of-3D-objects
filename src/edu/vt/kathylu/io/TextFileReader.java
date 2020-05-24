@@ -1,6 +1,7 @@
-package edu.vt.kathylu;
+package edu.vt.kathylu.io;
 
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+import edu.vt.kathylu.models.Triangle;
+import edu.vt.kathylu.models.Vertex;
 
 import java.io.File;
 import java.io.IOException;
