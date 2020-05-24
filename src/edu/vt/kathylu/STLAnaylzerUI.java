@@ -7,13 +7,15 @@ import edu.vt.kathylu.models.Vertex;
 import edu.vt.kathylu.processor.Connector;
 import edu.vt.kathylu.processor.TriangleProcessor;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Main {
+public class STLAnaylzerUI extends JFrame{
     private static TextFileReader textFileReader;
     private static String
             DATA_FILE_PATH = "",
@@ -23,12 +25,35 @@ public class Main {
             CRITICAL_VALUE = 0,
             SKIP = 0;
 
+    private JTextField dataPathInputField;
+    private JButton readDataButton;
+
+    private JTextField criticalValueInputField;
+    private JTextField skipNumInputField;
+    private JButton connectingButton;
+
+    private JTextField outputPathInputField;
+    private JTextField prefixInputField;
+    private JButton saveDataButton;
+
+    private STLAnaylzerUI(){
+        initUI();
+    }
+
+    private void initUI() {
+        setSize(new Dimension(800, 800));
+        setVisible(true);
+    }
 
     public static void main(String[] args) throws IOException {
+        new STLAnaylzerUI();
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\sample1.txt
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\sheet_1_100_100.txt
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\small_packing_0_0005volper_cube.stl
         //‪C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\mxene01_100_200430.stl (multiple sheets)
+
+
+        /*
         DATA_FILE_PATH = args[0];
         RESULT_FILE_PATH = args[1];
         RESULT_FILE_PATH = args[2];
@@ -66,5 +91,8 @@ public class Main {
         System.out.println("group count: " + groups.size());
         TextFileWriter textFileWriter = new TextFileWriter();
         textFileWriter.generateGroupTextFile(RESULT_FILE_PREFIX, groups, RESULT_FILE_PATH);
+         */
     }
+
+
 }
