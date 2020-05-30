@@ -23,9 +23,12 @@ public class STLAnaylzerUI extends JFrame{
             RESULT_FILE_PREFIX = "";
     private static int
             CRITICAL_VALUE = 0,
-            SKIP = 0;
+            SKIP = 0,
+            FRAME_WIDTH = 800,
+            FRAME_HEIGHT = 600;
 
     private List<Triangle> triangles;
+    private List<Set<Triangle>> groups;
 
     private JPanel mainPanel;
     private JPanel readPanel;
@@ -43,7 +46,7 @@ public class STLAnaylzerUI extends JFrame{
     private JTextField prefixInputField;
     private JButton saveDataButton;
 
-    private JTextArea resultArea;
+    private JTextArea logArea;
 
     private STLAnaylzerUI(){
         initUI();
@@ -51,28 +54,45 @@ public class STLAnaylzerUI extends JFrame{
         initActions();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+        logArea.append("Welcome!\n");
     }
 
     private void initUI() {
-        setSize(new Dimension(800, 800));
+        setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
-        mainPanel = new JPanel(new GridLayout(10,1,0,5));
-        readPanel = new JPanel(new GridLayout(10,1,0,5));
-        analyzePanel = new JPanel(new GridLayout(10,1,0,5));
-        writePanel = new JPanel(new GridLayout(10,1,0,5));
+        //mainPanel = new JPanel(new GridLayout(10,1,0,5));
+        mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         dataPathInputField = new JTextField();
+        dataPathInputField.setText("raw data file path");
+        dataPathInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 8, FRAME_HEIGHT / 15));
+
         skipNumInputField = new JTextField();
+        skipNumInputField.setText("skip number");
+        skipNumInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 1, FRAME_HEIGHT / 15));
+
         readDataButton = new JButton("read data");
+        readDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
 
         criticalValueInputField = new JTextField();
-        connectingButton = new JButton("analyze");
+        criticalValueInputField.setText("critical value");
+        criticalValueInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 1, FRAME_HEIGHT / 15));
+
+        connectingButton = new JButton("connect");
+        connectingButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
 
         outputPathInputField = new JTextField();
-        prefixInputField = new JTextField();
-        saveDataButton = new JButton("save");
+        outputPathInputField.setText("output file path");
+        outputPathInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 8, FRAME_HEIGHT / 15));
 
-        resultArea = new JTextArea();
+        prefixInputField = new JTextField();
+        prefixInputField.setText("prefix");
+        prefixInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 1, FRAME_HEIGHT / 15));
+        saveDataButton = new JButton("save");
+        saveDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
+
+        logArea = new JTextArea();
+        logArea.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15 * 4));
     }
 
     private void assembleUI() {
@@ -90,7 +110,7 @@ public class STLAnaylzerUI extends JFrame{
         mainPanel.add(prefixInputField);
         mainPanel.add(saveDataButton);
 
-        mainPanel.add(resultArea);
+        mainPanel.add(logArea);
     }
 
     private void initActions() {
@@ -104,10 +124,47 @@ public class STLAnaylzerUI extends JFrame{
                     readData(path, skipNumber);
                 } catch (IOException ex) {
                     ex.printStackTrace();
+                    logArea.append(ex + "\n");
                 }
             }
             getTriangleInfo();
         });
+
+        connectingButton.addActionListener(e -> {
+            float criticalValue = Float.parseFloat(criticalValueInputField.getText());
+            try {
+                connect(criticalValue);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                logArea.append(ex + "\n");
+            }
+
+        });
+
+        saveDataButton.addActionListener(e -> {
+            String outputPath = outputPathInputField.getText(), prefix = prefixInputField.getText();
+            try {
+                saveData(outputPath, prefix);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                logArea.append(ex + "\n");
+            }
+        });
+
+    }
+
+    private void saveData(String outputPath, String prefix) throws IOException {
+        TextFileWriter textFileWriter = new TextFileWriter();
+        logArea.append("saving data ...\n");
+        textFileWriter.generateGroupTextFile(prefix, groups, outputPath);
+        logArea.append("saving completed!\n");
+    }
+
+    private void connect(float criticalValue) {
+        logArea.append("start analyzing\n");
+        groups = (new Connector()).getConnectedGroups(triangles, criticalValue);
+        System.out.println("group count: " + groups.size());
+        logArea.append("get " + groups.size() + " groups\n");
     }
 
     public static void main(String[] args) throws IOException {
@@ -161,9 +218,10 @@ public class STLAnaylzerUI extends JFrame{
 
     private void readData(String path, int skipNumber) throws IOException {
         textFileReader = new TextFileReader(skipNumber, path);
+        logArea.append("start reading ...\n");
         triangles = textFileReader.getTrianlges();
         System.out.println("got " + triangles.size() + " triangles");
-        resultArea.append("got " + triangles.size() + " triangles\n");
+        logArea.append("got " + triangles.size() + " triangles\n");
     }
 
     private void getTriangleInfo(){
@@ -182,7 +240,7 @@ public class STLAnaylzerUI extends JFrame{
                 min=Math.min(min, length);
             }
         }
-        resultArea.append("average edge length: " + sum/count + "    min edge length: " + min + "    max edge length: " + max);
+        logArea.append("average edge length: " + sum/count + "    min edge length: " + min + "    max edge length: " + max);
         System.out.println("average edge length: " + sum/count + "    min edge length: " + min + "    max edge length: " + max);
     }
 
