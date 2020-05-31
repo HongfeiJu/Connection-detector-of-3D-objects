@@ -8,6 +8,7 @@ import edu.vt.klugroup.processor.Connector;
 import edu.vt.klugroup.processor.TriangleProcessor;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,13 +17,8 @@ import java.util.Set;
 
 public class STLAnaylzerUI extends JFrame{
     private static TextFileReader textFileReader;
-    private static String
-            DATA_FILE_PATH = "",
-            RESULT_FILE_PATH = "",
-            RESULT_FILE_PREFIX = "";
+
     private static int
-            CRITICAL_VALUE = 0,
-            SKIP = 0,
             FRAME_WIDTH = 800,
             FRAME_HEIGHT = 600;
 
@@ -30,19 +26,13 @@ public class STLAnaylzerUI extends JFrame{
     private List<Set<Triangle>> groups;
 
     private Container mainContainer;
-    private JPanel readPanel;
-    private JPanel analyzePanel;
-    private JPanel writePanel;
 
-    private JTextField dataPathInputField;
     private JTextField skipNumInputField;
     private JButton readDataButton;
 
     private JTextField criticalValueInputField;
     private JButton connectingButton;
 
-    private JTextField outputPathInputField;
-    private JTextField prefixInputField;
     private JButton saveDataButton;
 
     private JTextArea logArea;
@@ -51,8 +41,9 @@ public class STLAnaylzerUI extends JFrame{
         initUI();
         assembleUI();
         initActions();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logArea.append("Welcome!\n");
     }
 
@@ -63,31 +54,20 @@ public class STLAnaylzerUI extends JFrame{
         //mainContainer = new JPanel(new GridLayout(10,1,0,5));
         mainContainer = new Container();
 
-        dataPathInputField = new JTextField();
-        dataPathInputField.setText("raw data file path");
-        dataPathInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 8, FRAME_HEIGHT / 15));
-
         skipNumInputField = new JTextField();
-        skipNumInputField.setText("skip number");
-        skipNumInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 1, FRAME_HEIGHT / 15));
+        skipNumInputField.setText("1");
+        skipNumInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 4, FRAME_HEIGHT / 15));
 
         readDataButton = new JButton("read data");
-        readDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
+        readDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 5, FRAME_HEIGHT / 15));
 
         criticalValueInputField = new JTextField();
-        criticalValueInputField.setText("critical value");
-        criticalValueInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 1, FRAME_HEIGHT / 15));
+        criticalValueInputField.setText("1");
+        criticalValueInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 4, FRAME_HEIGHT / 15));
 
         connectingButton = new JButton("connect");
-        connectingButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
+        connectingButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 5, FRAME_HEIGHT / 15));
 
-        outputPathInputField = new JTextField();
-        outputPathInputField.setText("output file path");
-        outputPathInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 8, FRAME_HEIGHT / 15));
-
-        prefixInputField = new JTextField();
-        prefixInputField.setText("prefix");
-        prefixInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 1, FRAME_HEIGHT / 15));
         saveDataButton = new JButton("save");
         saveDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
 
@@ -100,15 +80,12 @@ public class STLAnaylzerUI extends JFrame{
         getContentPane().add(mainContainer);
         mainContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        mainContainer.add(dataPathInputField);
         mainContainer.add(skipNumInputField);
         mainContainer.add(readDataButton);
 
         mainContainer.add(criticalValueInputField);
         mainContainer.add(connectingButton);
 
-        mainContainer.add(outputPathInputField);
-        mainContainer.add(prefixInputField);
         mainContainer.add(saveDataButton);
 
         mainContainer.add(logArea);
@@ -116,12 +93,12 @@ public class STLAnaylzerUI extends JFrame{
 
     private void initActions() {
         readDataButton.addActionListener(e -> {
-            String path = dataPathInputField.getText();
-            int skipNumber = Integer.parseInt(skipNumInputField.getText());
+            String path = getRawDataFilePath();
             if (path.length() == 0) {
                 System.out.println("empty");
             } else {
                 try {
+                    int skipNumber = Integer.parseInt(skipNumInputField.getText());
                     readData(path, skipNumber);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -143,15 +120,40 @@ public class STLAnaylzerUI extends JFrame{
         });
 
         saveDataButton.addActionListener(e -> {
-            String outputPath = outputPathInputField.getText(), prefix = prefixInputField.getText();
+            String[] outputInfo = getOutputPathAndFilename();
             try {
-                saveData(outputPath, prefix);
+                saveData(outputInfo[0], outputInfo[1]);
             } catch (IOException ex) {
                 ex.printStackTrace();
                 logArea.append(ex + "\n");
             }
         });
 
+    }
+
+    private String[] getOutputPathAndFilename() {
+        JFileChooser jFileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        //jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int r = jFileChooser.showSaveDialog(null);
+        if (r == JFileChooser.APPROVE_OPTION){
+            // set the label to the path of the selected file
+            String path = jFileChooser.getCurrentDirectory().getAbsolutePath(),
+                    filename = jFileChooser.getSelectedFile().getName();
+
+            System.out.println(path + " " + filename);
+            return new String[]{path, filename};
+        }
+        return null;
+    }
+
+    private String getRawDataFilePath() {
+        JFileChooser jFileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        int r = jFileChooser.showOpenDialog(null);
+        if (r == JFileChooser.APPROVE_OPTION){
+            // set the label to the path of the selected file
+            return jFileChooser.getSelectedFile().getAbsolutePath();
+        }
+        return "";
     }
 
     private void saveData(String outputPath, String prefix) throws IOException {
