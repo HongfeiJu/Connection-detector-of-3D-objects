@@ -1,6 +1,4 @@
-package edu.vt.kathylu.models;
-
-import edu.vt.kathylu.models.Vertex;
+package edu.vt.klugroup.models;
 
 import java.util.ArrayList;
 import java.util.List;

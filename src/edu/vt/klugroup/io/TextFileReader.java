@@ -1,7 +1,7 @@
-package edu.vt.kathylu.io;
+package edu.vt.klugroup.io;
 
-import edu.vt.kathylu.models.Triangle;
-import edu.vt.kathylu.models.Vertex;
+import edu.vt.klugroup.models.Triangle;
+import edu.vt.klugroup.models.Vertex;
 
 import java.io.File;
 import java.io.IOException;

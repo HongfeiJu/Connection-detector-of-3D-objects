@@ -1,18 +1,17 @@
-package edu.vt.kathylu;
+package edu.vt.klugroup;
 
-import edu.vt.kathylu.io.TextFileReader;
-import edu.vt.kathylu.io.TextFileWriter;
-import edu.vt.kathylu.models.Triangle;
-import edu.vt.kathylu.models.Vertex;
-import edu.vt.kathylu.processor.Connector;
-import edu.vt.kathylu.processor.TriangleProcessor;
+import edu.vt.klugroup.io.TextFileReader;
+import edu.vt.klugroup.io.TextFileWriter;
+import edu.vt.klugroup.models.Triangle;
+import edu.vt.klugroup.models.Vertex;
+import edu.vt.klugroup.processor.Connector;
+import edu.vt.klugroup.processor.TriangleProcessor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 public class STLAnaylzerUI extends JFrame{
@@ -30,7 +29,7 @@ public class STLAnaylzerUI extends JFrame{
     private List<Triangle> triangles;
     private List<Set<Triangle>> groups;
 
-    private JPanel mainPanel;
+    private Container mainContainer;
     private JPanel readPanel;
     private JPanel analyzePanel;
     private JPanel writePanel;
@@ -58,10 +57,11 @@ public class STLAnaylzerUI extends JFrame{
     }
 
     private void initUI() {
+        setTitle("3D object connector");
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
-        //mainPanel = new JPanel(new GridLayout(10,1,0,5));
-        mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        //mainContainer = new JPanel(new GridLayout(10,1,0,5));
+        mainContainer = new Container();
 
         dataPathInputField = new JTextField();
         dataPathInputField.setText("raw data file path");
@@ -97,20 +97,21 @@ public class STLAnaylzerUI extends JFrame{
 
     private void assembleUI() {
 
-        getContentPane().add(mainPanel);
+        getContentPane().add(mainContainer);
+        mainContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        mainPanel.add(dataPathInputField);
-        mainPanel.add(skipNumInputField);
-        mainPanel.add(readDataButton);
+        mainContainer.add(dataPathInputField);
+        mainContainer.add(skipNumInputField);
+        mainContainer.add(readDataButton);
 
-        mainPanel.add(criticalValueInputField);
-        mainPanel.add(connectingButton);
+        mainContainer.add(criticalValueInputField);
+        mainContainer.add(connectingButton);
 
-        mainPanel.add(outputPathInputField);
-        mainPanel.add(prefixInputField);
-        mainPanel.add(saveDataButton);
+        mainContainer.add(outputPathInputField);
+        mainContainer.add(prefixInputField);
+        mainContainer.add(saveDataButton);
 
-        mainPanel.add(logArea);
+        mainContainer.add(logArea);
     }
 
     private void initActions() {
@@ -168,7 +169,14 @@ public class STLAnaylzerUI extends JFrame{
     }
 
     public static void main(String[] args) throws IOException {
-        new STLAnaylzerUI();
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new STLAnaylzerUI();
+            }
+        });
+
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\sample1.txt
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\sheet_1_100_100.txt
         //C:\Users\hongf\Google Drive\Career\Kathy Lu\raw data\small_packing_0_0005volper_cube.stl

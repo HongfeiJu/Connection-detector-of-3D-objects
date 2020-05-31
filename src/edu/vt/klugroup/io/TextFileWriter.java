@@ -1,6 +1,6 @@
-package edu.vt.kathylu.io;
+package edu.vt.klugroup.io;
 
-import edu.vt.kathylu.models.Triangle;
+import edu.vt.klugroup.models.Triangle;
 
 import java.io.FileWriter;
 import java.io.IOException;

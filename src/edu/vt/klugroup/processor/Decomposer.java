@@ -1,7 +1,7 @@
-package edu.vt.kathylu.processor;
+package edu.vt.klugroup.processor;
 
-import edu.vt.kathylu.models.Triangle;
-import edu.vt.kathylu.models.Vertex;
+import edu.vt.klugroup.models.Triangle;
+import edu.vt.klugroup.models.Vertex;
 
 import java.util.LinkedList;
 import java.util.List;
