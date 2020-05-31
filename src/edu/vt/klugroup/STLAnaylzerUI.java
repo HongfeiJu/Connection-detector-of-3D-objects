@@ -27,9 +27,11 @@ public class STLAnaylzerUI extends JFrame{
 
     private Container mainContainer;
 
+    private JLabel skipNumLabel;
     private JTextField skipNumInputField;
     private JButton readDataButton;
 
+    private JLabel criticalValueLabel;
     private JTextField criticalValueInputField;
     private JButton connectingButton;
 
@@ -54,16 +56,24 @@ public class STLAnaylzerUI extends JFrame{
         //mainContainer = new JPanel(new GridLayout(10,1,0,5));
         mainContainer = new Container();
 
+        skipNumLabel = new JLabel("skip number", SwingConstants.CENTER);
+        skipNumLabel.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
+        skipNumLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+
         skipNumInputField = new JTextField();
         skipNumInputField.setText("1");
-        skipNumInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 4, FRAME_HEIGHT / 15));
+        skipNumInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
 
         readDataButton = new JButton("read data");
         readDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 5, FRAME_HEIGHT / 15));
 
+        criticalValueLabel = new JLabel("critical value", SwingConstants.CENTER);
+        criticalValueLabel.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
+        criticalValueLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+
         criticalValueInputField = new JTextField();
         criticalValueInputField.setText("1");
-        criticalValueInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 4, FRAME_HEIGHT / 15));
+        criticalValueInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
 
         connectingButton = new JButton("connect");
         connectingButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 5, FRAME_HEIGHT / 15));
@@ -72,7 +82,7 @@ public class STLAnaylzerUI extends JFrame{
         saveDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
 
         logArea = new JTextArea();
-        logArea.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15 * 4));
+        logArea.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15 * 8));
     }
 
     private void assembleUI() {
@@ -80,9 +90,11 @@ public class STLAnaylzerUI extends JFrame{
         getContentPane().add(mainContainer);
         mainContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        mainContainer.add(skipNumLabel);
         mainContainer.add(skipNumInputField);
         mainContainer.add(readDataButton);
 
+        mainContainer.add(criticalValueLabel);
         mainContainer.add(criticalValueInputField);
         mainContainer.add(connectingButton);
 
