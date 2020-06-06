@@ -7,7 +7,6 @@ import java.util.*;
 
 public class Connector {
     public Connector(){}
-    private int processed=0;
     public List<Set<Triangle>> getConnectedGroups(List<Triangle> triangles, float gap){
 
         Collections.sort(triangles, new Comparator<Triangle>() {
@@ -24,13 +23,11 @@ public class Connector {
             }
         });
 
-
-        int size = triangles.size();
-        boolean[] visited = new boolean[triangles.size()];
         Set<Integer>[] graph = build(triangles, gap);
-        System.out.println("graph is built");
+
         List<Set<Triangle>> res = new LinkedList<>();
         unionFindConnect(graph, triangles, res);
+
         return res;
     }
 
@@ -39,6 +36,7 @@ public class Connector {
         for(int i=0;i<parent.length;i++){
             parent[i] = i;
         }
+
         for(int i=0;i<graph.length;i++){
             System.out.println("connect triangle: " + i);
             for(int j: graph[i]){
@@ -48,6 +46,7 @@ public class Connector {
                 }
             }
         }
+
         Map<Integer, Set<Triangle>> groups = new HashMap<>();
         for(int i=0;i<parent.length;i++){
             int p = find(parent, i);
@@ -56,6 +55,7 @@ public class Connector {
             }
             groups.get(p).add(trianges.get(i));
         }
+
         for(Set<Triangle> group: groups.values()){
             System.out.println("group size: " + group.size());
             res.add(group);
@@ -90,34 +90,6 @@ public class Connector {
             System.out.println("triangle: "+i+",  neighbour count: " +graph[i].size());
         }
         return graph;
-    }
-
-    private void connect(List<Triangle> triangles, boolean[] visited, List<Triangle> cur,
-                         List<Triangle> subres, float gap){
-        System.out.println("level counts: " + cur.size());
-        List<Triangle> nextCur = new LinkedList<>();
-        boolean foundnew = false;
-        for(Triangle triangle: cur){
-            for(int i = 0;i < triangles.size();i++){
-                if(visited[i]){
-                    continue;
-                }
-                if(isNeighbour(triangle.getCentroid(), triangles.get(i).getCentroid(), gap)){
-                    //System.out.print(i+" ");
-                    foundnew = true;
-                    visited[i] = true;
-                    nextCur.add(triangles.get(i));
-                    processed++;
-                    //System.out.println(processed + " : " + visited.length);
-                }
-            }
-        }
-        subres.addAll(nextCur);
-        if(!foundnew){
-            return;
-        }
-
-        connect(triangles, visited, nextCur, subres, gap);
     }
 
     private boolean isNeighbour(Vertex v1, Vertex v2, float gap) {
