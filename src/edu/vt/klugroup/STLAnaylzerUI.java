@@ -23,6 +23,10 @@ import java.util.Set;
  */
 
 public class STLAnaylzerUI extends JFrame{
+    private String GREETING = "Welcome to 3D object connector 1.0!\n"
+            + "Developed by Hongfei Ju (https://www.linkedin.com/in/hongfei-ju-47b2a5108/)\n"
+            + "Copyright (c) 2020 Hongfei Ju\n";
+
     private static TextFileReader textFileReader;
 
     private static int
@@ -53,14 +57,13 @@ public class STLAnaylzerUI extends JFrame{
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        logArea.append("Welcome!\n");
+        logArea.append(GREETING);
     }
 
     private void initUI() {
         setTitle("3D object connector");
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
-        //mainContainer = new JPanel(new GridLayout(10,1,0,5));
         mainContainer = new Container();
 
         skipNumLabel = new JLabel("skip number", SwingConstants.CENTER);
@@ -95,7 +98,7 @@ public class STLAnaylzerUI extends JFrame{
 
         logArea = new JTextArea();
         logArea.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15 * 10));
-        logArea.setFont(new Font("Verdana", Font.PLAIN, 15));
+        logArea.setFont(new Font("Verdana", Font.PLAIN, 14));
     }
 
     private void assembleUI() {
