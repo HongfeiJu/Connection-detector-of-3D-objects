@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Main class for launching the application
+ * @author Hongfei Ju
+ * @version 1.0
+ *
+ */
+
 public class STLAnaylzerUI extends JFrame{
     private static TextFileReader textFileReader;
 
@@ -63,9 +70,11 @@ public class STLAnaylzerUI extends JFrame{
         skipNumInputField = new JTextField();
         skipNumInputField.setText("1");
         skipNumInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
+        skipNumInputField.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         readDataButton = new JButton("read data");
         readDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 5, FRAME_HEIGHT / 15));
+        readDataButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         criticalValueLabel = new JLabel("critical value", SwingConstants.CENTER);
         criticalValueLabel.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
@@ -74,15 +83,19 @@ public class STLAnaylzerUI extends JFrame{
         criticalValueInputField = new JTextField();
         criticalValueInputField.setText("1");
         criticalValueInputField.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 2, FRAME_HEIGHT / 15));
+        criticalValueInputField.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         connectingButton = new JButton("connect");
         connectingButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 5, FRAME_HEIGHT / 15));
+        connectingButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         saveDataButton = new JButton("save");
         saveDataButton.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15));
+        saveDataButton.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         logArea = new JTextArea();
-        logArea.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15 * 8));
+        logArea.setPreferredSize(new Dimension(FRAME_WIDTH / 10 * 9, FRAME_HEIGHT / 15 * 10));
+        logArea.setFont(new Font("Verdana", Font.PLAIN, 15));
     }
 
     private void assembleUI() {
@@ -107,7 +120,7 @@ public class STLAnaylzerUI extends JFrame{
         readDataButton.addActionListener(e -> {
             String path = getRawDataFilePath();
             if (path.length() == 0) {
-                System.out.println("empty");
+                System.out.println("No file selected");
             } else {
                 try {
                     int skipNumber = Integer.parseInt(skipNumInputField.getText());
@@ -121,8 +134,8 @@ public class STLAnaylzerUI extends JFrame{
         });
 
         connectingButton.addActionListener(e -> {
-            float criticalValue = Float.parseFloat(criticalValueInputField.getText());
             try {
+                float criticalValue = Float.parseFloat(criticalValueInputField.getText());
                 connect(criticalValue);
             } catch (Exception ex) {
                 ex.printStackTrace();
