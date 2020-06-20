@@ -1,6 +1,6 @@
 Connection detector of 3D shape
 ======
-**Connection detector of 3D shape** is a tool for detecting the connected triangle groups in STL file. For any two triangles, if the distance between them (based on centroid) is less than a critical value, they will put into the same connected group. The program can read the data from a STL file and detect the connnected groups. The data of each connected group can be write into a new STL file. This software is developed based on the requirements of [Dr. Kathy Lu]() at Virginia Tech.
+**Connection detector of 3D shape** is a tool for detecting the connected triangle groups in STL file. For any two triangles, if the distance between them (based on centroid) is less than a critical value, they are thought of as being connected and will put into the same connected group. The program can read the data from a STL file and detect the connnected groups. The data of each connected group can be write into a new STL file. This software is developed based on the requirements of [Dr. Kathy Lu]() at Virginia Tech.
 
 #### Screenshot
 ![Screenshot software](https://github.com/HongfeiJu/Connection-detector-of-3D-objects/blob/master/screenshot/user_interface.PNG "user interface")
