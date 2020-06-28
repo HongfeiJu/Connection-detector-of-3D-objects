@@ -1,7 +1,13 @@
-1. import data: cordinate of the points consisting of the 3D shape
-2. output result: connected regoins (number and the corresponidng points)
-3. software components
-3.1. data reader: extract point coordinate from the file
-3.2. data anaylzer: recoginize connected regions based on the coordinates of the points
-3.3. result generator: output connection result and write it into a file
-3.4. user interface
+week 1: research about connection of 3D shape in space
+week 2: clarify project requirements and create project
+week 3-4: create the object of vertext, triangle and sheet
+week 5: read vertex data from STL file
+week 6-7: get the triangle data and divide oversize triangles
+week 8: find connected triangles
+week 9: write result into files
+week 10: run the program using command line
+week 11: create main UI frame and components
+week 12: add file chooser and labels
+week 13: beautify the UI and refactor the code
+week 14: write user guide and related document
+week 15-16: clean the codes and publish the program in the group website
