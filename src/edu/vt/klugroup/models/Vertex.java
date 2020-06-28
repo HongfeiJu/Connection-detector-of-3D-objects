@@ -3,9 +3,7 @@ package edu.vt.klugroup.models;
 public class Vertex {
     private float x = 0, y = 0, z = 0;
 
-    public Vertex(){
-
-    }
+    public Vertex(){}
 
     public void setX(float x) {
         this.x = x;

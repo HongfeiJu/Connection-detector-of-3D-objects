@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Triangle {
+
     private Vertex v1, v2, v3;
     private Vertex centroid = null;
     private List<String> text = null;
+
     public Triangle(){
         text = new ArrayList<>();
     }

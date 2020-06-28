@@ -38,7 +38,6 @@ public class Connector {
         }
 
         for(int i=0;i<graph.length;i++){
-            System.out.println("connect triangle: " + i);
             for(int j: graph[i]){
                 int pi = find(parent, i), pj = find(parent, j);
                 if(pi != pj){
@@ -57,7 +56,6 @@ public class Connector {
         }
 
         for(Set<Triangle> group: groups.values()){
-            System.out.println("group size: " + group.size());
             res.add(group);
         }
     }
@@ -77,17 +75,14 @@ public class Connector {
         for(int i=0;i<triangles.size();i++){
             for(int j=i+1;j<triangles.size();j++){
                 Vertex centroid1 = triangles.get(i).getCentroid(), centroid2 = triangles.get(j).getCentroid();
-                //System.out.println("Distance from "+i+" to "+j+": "+getDistanceBetweenVertex(centroid1, centroid2));
                 if(Math.abs(centroid1.getX() - centroid2.getX()) > gap){
                     break;
                 }
 
                 if(isNeighbour(triangles.get(i).getCentroid(), triangles.get(j).getCentroid(), gap)){
                     graph[i].add(j);
-                    //graph[j].add(i);
                 }
             }
-            System.out.println("triangle: "+i+",  neighbour count: " +graph[i].size());
         }
         return graph;
     }

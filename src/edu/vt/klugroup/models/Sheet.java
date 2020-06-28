@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sheet {
+
     List<Triangle> triangles;
+
     public Sheet(){
         triangles = new ArrayList<>();
     }

@@ -203,7 +203,6 @@ public class STLAnaylzerUI extends JFrame{
         JFileChooser jFileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         int r = jFileChooser.showOpenDialog(null);
         if (r == JFileChooser.APPROVE_OPTION){
-            // set the label to the path of the selected file
             return jFileChooser.getSelectedFile().getAbsolutePath();
         }
         return "";

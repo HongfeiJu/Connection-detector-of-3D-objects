@@ -28,7 +28,6 @@ public class Decomposer {
         List<Float> lengths = processor.getTriangleEdgeLengths(triangle);
         List<Triangle> result = new LinkedList<>();
         float len1 = lengths.get(0), len2 = lengths.get(1), len3 = lengths.get(2);
-        //System.out.println("len1: " + len1 + ", len2: " + len2 + ", len3: " +len3);
         if( len1<= limit && len2 <= limit && len3 <= limit ){
             result.add(triangle);
         }else if(len1 >= len2 && len1 >= len3){

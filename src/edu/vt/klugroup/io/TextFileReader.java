@@ -20,11 +20,9 @@ public class TextFileReader {
             Triangle triangle = new Triangle();
             int count = 7 * skip;
             while(count>0 && sc.hasNextLine()){
-                //System.out.println();
                 count--;
                 String line = sc.nextLine();
                 triangle.addText(line);
-                //System.out.println(line);
             }
             if(count>0){
                 break;
