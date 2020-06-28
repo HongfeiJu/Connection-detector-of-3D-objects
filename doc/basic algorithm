@@ -1,0 +1,6 @@
+1. calculate the centroid coordinate of the triangles
+2. calculate the distance between triangles based on the centroid coordinate
+3. based on the critical value, tell whether two triangles are connected
+4. iterate the triangles and get all the connected triangles pairs
+5. based on the connected triangles pairs, build a graph
+6. use union find algorithm to get all the connencted groups
